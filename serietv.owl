@@ -1,0 +1,2587 @@
+@prefix : <http://www.semanticweb.org/progettomodsem/2020/serietv#> .
+@prefix db: <http://dbpedia.org/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix part: <http://www.ontologydesignpatterns.org/cp/owl/partof.owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#> .
+@prefix serietv: <http://www.semanticweb.org/progettomodsem/2020/serietv#> .
+@base <http://www.semanticweb.org/progettomodsem/2020/serietv> .
+
+<http://www.semanticweb.org/progettomodsem/2020/serietv> rdf:type owl:Ontology ;
+                                                          owl:imports <http://www.ontologydesignpatterns.org/cp/owl/partof.owl> ,
+                                                                      <http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl> ;
+                                                          <http://purl.org/dc/elements/1.1/creator> "Enrico Burdisso" ;
+                                                          <http://purl.org/dc/elements/1.1/date> "2021-01-11" ;
+                                                          <http://purl.org/dc/elements/1.1/description> "Ontologia che rappresenta le serie televisive"@it ,
+                                                                                                        "Ontology representing television series"@en ;
+                                                          <http://purl.org/dc/elements/1.1/title> "Serie televisive"@it ,
+                                                                                                  "Television series"@en ;
+                                                          serietv:vann:preferredNamespacePrefix "http://www.semanticweb.org/progettomodsem/2020/serietv" ;
+                                                          serietv:vann:preferredNamespaceURI "serietv" ;
+                                                          rdfs:label "serietv"@it ,
+                                                                     "tvseries"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/creator
+<http://purl.org/dc/elements/1.1/creator> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/date
+<http://purl.org/dc/elements/1.1/date> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/description
+<http://purl.org/dc/elements/1.1/description> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/title
+<http://purl.org/dc/elements/1.1/title> rdf:type owl:AnnotationProperty .
+
+
+###  http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled
+<http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#vann:preferredNamespacePrefix
+serietv:vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#vann:preferredNamespaceURI
+serietv:vann:preferredNamespaceURI rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#castContienePersona
+serietv:castContienePersona rdf:type owl:ObjectProperty ;
+                            rdfs:domain serietv:Cast ;
+                            rdfs:range serietv:Persona ,
+                                       <http://xmlns.com/foaf/0.1/Person> ;
+                            rdfs:comment "Property that link a cast to its person"@en ,
+                                         "Proprietà che collega un cast a una persona"@it ;
+                            rdfs:label "castContainsPerson"@en ,
+                                       "castContienePersona"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#episodioFattoIn
+serietv:episodioFattoIn rdf:type owl:ObjectProperty ;
+                        rdfs:domain serietv:Episodio ;
+                        rdfs:range serietv:Paese ;
+                        rdfs:comment "Property that links an episode to its country"@en ,
+                                     "proprietà che collega un episodio al suo paese"@it ;
+                        rdfs:label "episodeDoingIn"@en ,
+                                   "episodioFattoIn"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#interpreta
+serietv:interpreta rdf:type owl:ObjectProperty ;
+                   owl:inverseOf serietv:personaggio_interpretato_da ;
+                   rdfs:domain serietv:Persona ,
+                               <http://xmlns.com/foaf/0.1/Person> ;
+                   rdfs:range serietv:Personaggio ;
+                   rdfs:comment "Property that links an actor to its character"@en ,
+                                "Proprietà che collega un attore / attrice al suo personaggio"@it ;
+                   rdfs:label "PersonInterprets"@en ,
+                              "PersonaInterpreta"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#persona_ha_ruolo
+serietv:persona_ha_ruolo rdf:type owl:ObjectProperty ;
+                         rdfs:domain serietv:Persona ,
+                                     <http://xmlns.com/foaf/0.1/Person> ;
+                         rdfs:range serietv:Ruolo ;
+                         rdfs:comment "Property that links a person to its role in a series"@en ,
+                                      "Proprietà che collega una persona al suo ruolo in una serie tv"@it ;
+                         rdfs:label "personHasRole"@en ,
+                                    "personaHaRuolo"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#personaggio_di_serie
+serietv:personaggio_di_serie rdf:type owl:ObjectProperty ;
+                             owl:inverseOf serietv:serie_ha_personaggio ;
+                             rdfs:domain serietv:Personaggio ;
+                             rdfs:range serietv:SerieTelevisiva ,
+                                        [ rdf:type owl:Class ;
+                                          owl:unionOf ( serietv:Episodio
+                                                        serietv:SerieTelevisiva
+                                                      )
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty part:hasPart ;
+                                          owl:someValuesFrom serietv:Stagione
+                                        ] ;
+                             rdfs:comment "Property that links a character to its tv series"@en ,
+                                          "Proprietà che collega un personaggio alla sua serie tv"@it ;
+                             rdfs:label "characterOfTheSeries"@en ,
+                                        "personaggioDellaSerie"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#personaggio_interpretato_da
+serietv:personaggio_interpretato_da rdf:type owl:ObjectProperty ;
+                                    rdfs:domain serietv:Personaggio ;
+                                    rdfs:range serietv:Persona ,
+                                               <http://xmlns.com/foaf/0.1/Person> ;
+                                    rdfs:comment "Property that links a character to its actor"@en ,
+                                                 "Proprietà che collega un personaggio al suo attore / attrice"@it ;
+                                    rdfs:label "characterInterpretedBy"@en ,
+                                               "personaggioInterpretatoDa"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#serieContienePersona
+serietv:serieContienePersona rdf:type owl:ObjectProperty ;
+                             owl:propertyChainAxiom ( serietv:serie_ha_cast
+                                                      serietv:castContienePersona
+                                                    ) ;
+                             rdfs:comment "Property that links a series to a person"@en ,
+                                          "Proprietà che collega una serie a una persona"@it ;
+                             rdfs:label "seriContienePersona"@it ,
+                                        "seriesContainsPerson"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#serieHaGenere
+serietv:serieHaGenere rdf:type owl:ObjectProperty ;
+                      rdfs:domain serietv:SerieTelevisiva ,
+                                  [ rdf:type owl:Class ;
+                                    owl:unionOf ( serietv:Episodio
+                                                  serietv:SerieTelevisiva
+                                                )
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty part:hasPart ;
+                                    owl:someValuesFrom serietv:Stagione
+                                  ] ;
+                      rdfs:range db:genre ,
+                                 serietv:Genere ;
+                      rdfs:comment "Property that links a tv series to its genre"@en ,
+                                   "Proprietà che collega una serie tv al suo genere"@it ;
+                      rdfs:label "serieHaGenere"@it ,
+                                 "seriesHasGenre"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#serie_ha_cast
+serietv:serie_ha_cast rdf:type owl:ObjectProperty ;
+                      rdfs:domain serietv:SerieTelevisiva ,
+                                  [ rdf:type owl:Class ;
+                                    owl:unionOf ( serietv:Episodio
+                                                  serietv:SerieTelevisiva
+                                                )
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty part:hasPart ;
+                                    owl:someValuesFrom serietv:Stagione
+                                  ] ;
+                      rdfs:range serietv:Cast ;
+                      rdfs:comment "Property that links a tv series to its cast"@en ,
+                                   "Proprietà ch collega una serie tv al suo cast"@it ;
+                      rdfs:label "serieHaCast"@it ,
+                                 "seriesHasCast"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#serie_ha_intervallo
+serietv:serie_ha_intervallo rdf:type owl:ObjectProperty ;
+                            rdfs:domain serietv:SerieTelevisiva ,
+                                        [ rdf:type owl:Class ;
+                                          owl:unionOf ( serietv:Episodio
+                                                        serietv:SerieTelevisiva
+                                                      )
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty part:hasPart ;
+                                          owl:someValuesFrom serietv:Stagione
+                                        ] ;
+                            rdfs:range time:TimeInterval ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty time:hasIntervalEndDate ;
+                                         owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty time:hasIntervalStartDate ;
+                                         owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                       ] ;
+                            rdfs:comment "Property that liks a tv series to its time interval"@en ,
+                                         "Proprietà che collega una serie tv al suo intervallo di tempo"@it ;
+                            rdfs:label "serieHaIntervallo"@it ,
+                                       "seriesHasInterval"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#serie_ha_paese
+serietv:serie_ha_paese rdf:type owl:ObjectProperty ,
+                                owl:FunctionalProperty ;
+                       rdfs:domain serietv:SerieTelevisiva ,
+                                   [ rdf:type owl:Class ;
+                                     owl:unionOf ( serietv:Episodio
+                                                   serietv:SerieTelevisiva
+                                                 )
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty part:hasPart ;
+                                     owl:someValuesFrom serietv:Stagione
+                                   ] ;
+                       rdfs:range serietv:Paese ,
+                                  [ rdf:type owl:Class ;
+                                    owl:oneOf ( serietv:Brasile
+                                                serietv:Italia
+                                                serietv:USA
+                                              )
+                                  ] ;
+                       rdfs:comment "Functional property that links a tv series to its original country"@en ,
+                                    "Proprietà funzionale che collega una serie tv al suo paese d' origine"@it ;
+                       rdfs:label "serieHaPaese"@it ,
+                                  "seriesHasCountry"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#serie_ha_personaggio
+serietv:serie_ha_personaggio rdf:type owl:ObjectProperty ;
+                             rdfs:domain serietv:SerieTelevisiva ,
+                                         [ rdf:type owl:Class ;
+                                           owl:unionOf ( serietv:Episodio
+                                                         serietv:SerieTelevisiva
+                                                       )
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty part:hasPart ;
+                                           owl:someValuesFrom serietv:Stagione
+                                         ] ;
+                             rdfs:range serietv:Personaggio ;
+                             rdfs:comment "Property that links a tv series to its character"@en ,
+                                          "Proprietà che collega una serie tv al suo personaggio"@it ;
+                             rdfs:label "serieHaPersonaggio"@it ,
+                                        "seriesHasCharacter"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalDate
+time:hasIntervalDate rdfs:domain [ rdf:type owl:Restriction ;
+                                   owl:onProperty time:hasIntervalEndDate ;
+                                   owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty time:hasIntervalStartDate ;
+                                   owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                 ] .
+
+
+###  http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalEndDate
+time:hasIntervalEndDate rdfs:domain [ rdf:type owl:Restriction ;
+                                      owl:onProperty time:hasIntervalEndDate ;
+                                      owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty time:hasIntervalStartDate ;
+                                      owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                    ] .
+
+
+###  http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#hasIntervalStartDate
+time:hasIntervalStartDate rdfs:domain [ rdf:type owl:Restriction ;
+                                        owl:onProperty time:hasIntervalEndDate ;
+                                        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty time:hasIntervalStartDate ;
+                                        owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                      ] .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#conclusa
+serietv:conclusa rdf:type owl:DatatypeProperty ;
+                 rdfs:domain serietv:SerieTelevisiva ,
+                             [ rdf:type owl:Class ;
+                               owl:unionOf ( serietv:Episodio
+                                             serietv:SerieTelevisiva
+                                           )
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty part:hasPart ;
+                               owl:someValuesFrom serietv:Stagione
+                             ] ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Property that says if a series is ended or not"@en ,
+                              "Proprietà che dice se una serie è conclusa o no"@it ;
+                 rdfs:label "conclusa"@it ,
+                            "ended"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#numero_episodi
+serietv:numero_episodi rdf:type owl:DatatypeProperty ;
+                       rdfs:domain serietv:SerieTelevisiva ,
+                                   [ rdf:type owl:Class ;
+                                     owl:unionOf ( serietv:Episodio
+                                                   serietv:SerieTelevisiva
+                                                 )
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty part:hasPart ;
+                                     owl:someValuesFrom serietv:Stagione
+                                   ] ;
+                       rdfs:range xsd:nonNegativeInteger ;
+                       rdfs:comment "number of episodes of a tv series"@en ,
+                                    "numero di episodi di una serie tv"@it ;
+                       rdfs:label "numberEpisodes"@en ,
+                                  "numeroEpisodi"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#numero_stagioni
+serietv:numero_stagioni rdf:type owl:DatatypeProperty ;
+                        rdfs:domain serietv:SerieTelevisiva ,
+                                    [ rdf:type owl:Class ;
+                                      owl:unionOf ( serietv:Episodio
+                                                    serietv:SerieTelevisiva
+                                                  )
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty part:hasPart ;
+                                      owl:someValuesFrom serietv:Stagione
+                                    ] ;
+                        rdfs:range xsd:nonNegativeInteger ;
+                        rdfs:comment "number of seasons of a tv series"@en ,
+                                     "numero di stagioni di una serie tv"@it ;
+                        rdfs:label "numberSeasons"@en ,
+                                   "numeroStagioni"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#titolo
+serietv:titolo rdf:type owl:DatatypeProperty ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( serietv:Episodio
+                                           serietv:SerieTelevisiva
+                                         )
+                           ] ;
+               rdfs:comment "title of an episode or a tv series"@en ,
+                            "titolo di un episodio o di una serie tv"@it ;
+               rdfs:label "title"@en ,
+                          "titolo"@it .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://dbpedia.org/ontology#genre
+db:genre rdf:type owl:Class ;
+         owl:equivalentClass serietv:Genere ;
+         rdfs:subClassOf serietv:Genere ;
+         rdfs:comment "Genere definito da dbpedia"@it ,
+                      "Genre defined by dbpedia"@en ;
+         rdfs:label "dbo:genre"@en ,
+                    "dbo:genre"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Attore
+serietv:Attore rdf:type owl:Class ;
+               rdfs:subClassOf serietv:Ruolo ;
+               rdfs:comment "Role as an actor / actress of a tv series"@en ,
+                            "Ruolo da attore / attrice in una serie tv"@it ;
+               rdfs:label "Actor"@en ,
+                          "Attore"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#AttoreSerie
+serietv:AttoreSerie rdf:type owl:Class ;
+                    owl:equivalentClass [ rdf:type owl:Restriction ;
+                                          owl:onProperty serietv:persona_ha_ruolo ;
+                                          owl:someValuesFrom serietv:Attore
+                                        ] ;
+                    rdfs:subClassOf serietv:Persona ,
+                                    <http://xmlns.com/foaf/0.1/Person> ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty serietv:persona_ha_ruolo ;
+                                      owl:someValuesFrom serietv:Attore
+                                    ] ;
+                    rdfs:comment "Person who has role of actor / actress of a tv series"@en ,
+                                 "Persona che ha ruolo di attore / attrice in una serie tv"@it ;
+                    rdfs:label "AttoreSerie"@it ,
+                               "SeriesActor"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Brasile
+serietv:Brasile rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Class ;
+                                      owl:oneOf ( serietv:Brasile
+                                                )
+                                    ] ;
+                rdfs:subClassOf serietv:Paese ,
+                                [ rdf:type owl:Class ;
+                                  owl:oneOf ( serietv:Brasile
+                                            )
+                                ] ,
+                                [ rdf:type owl:Class ;
+                                  owl:oneOf ( serietv:Brasile
+                                              serietv:Italia
+                                              serietv:USA
+                                            )
+                                ] .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Cast
+serietv:Cast rdf:type owl:Class ;
+             rdfs:comment "I vari cast delle serie tv"@it ,
+                          "Various cast of the tv series"@en ;
+             rdfs:label "Cast"@en ,
+                        "Cast"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#CastMin3Persone
+serietv:CastMin3Persone rdf:type owl:Class ;
+                        owl:equivalentClass [ rdf:type owl:Restriction ;
+                                              owl:onProperty serietv:castContienePersona ;
+                                              owl:minQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+                                              owl:onClass serietv:Persona
+                                            ] ;
+                        rdfs:subClassOf serietv:Cast ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty serietv:castContienePersona ;
+                                          owl:minQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+                                          owl:onClass serietv:Persona
+                                        ] ;
+                        rdfs:comment "Class that contains cast instances that have a minimum of 3 people"@en ,
+                                     "Classe che contiene istanze di cast che hanno minimo 3 persone"@it ;
+                        rdfs:label "CastMin3People"@en ,
+                                   "CastMin3Persone"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Commedia
+serietv:Commedia rdf:type owl:Class ;
+                 rdfs:subClassOf db:genre ,
+                                 serietv:Genere ;
+                 rdfs:comment "Commedy genre"@en ,
+                              "Genere commedia"@it ;
+                 rdfs:label "Commedia"@it ,
+                            "Commedy"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Dramma
+serietv:Dramma rdf:type owl:Class ;
+               rdfs:subClassOf db:genre ,
+                               serietv:Genere ;
+               rdfs:comment "Drama genre"@en ,
+                            "Genere dramma"@it ;
+               rdfs:label "Drama"@en ,
+                          "Dramma"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#DrammaFamigliare
+serietv:DrammaFamigliare rdf:type owl:Class ;
+                         rdfs:subClassOf db:genre ,
+                                         serietv:Dramma ,
+                                         serietv:Genere ;
+                         rdfs:comment "Familiar drama genre"@en ,
+                                      "Genere dramma famigliare"@it ;
+                         rdfs:label "DrammaFamigliare"@it ,
+                                    "FamiliarDrama"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Drammatico
+serietv:Drammatico rdf:type owl:Class ;
+                   rdfs:subClassOf db:genre ,
+                                   serietv:Genere ;
+                   rdfs:comment "Dramatic genre"@en ,
+                                "genere drammatico"@it ;
+                   rdfs:label "Drammatic"@en ,
+                              "Drammatico"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Episodio
+serietv:Episodio rdf:type owl:Class ;
+                 rdfs:subClassOf [ rdf:type owl:Class ;
+                                   owl:unionOf ( serietv:Episodio
+                                                 serietv:SerieTelevisiva
+                                               )
+                                 ] ;
+                 rdfs:comment "Episode of a season that belong to a tv series"@en ,
+                              "Episodio di una stagione appartenente a una serie tv"@it ;
+                 rdfs:label "Episode"@en ,
+                            "Episodio"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Fantascienza
+serietv:Fantascienza rdf:type owl:Class ;
+                     rdfs:subClassOf db:genre ,
+                                     serietv:Genere ;
+                     rdfs:comment "Science fiction genre"@en ,
+                                  "genere fantascienza"@it ;
+                     rdfs:label "Fantascienza"@it ,
+                                "ScienceFiction"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Genere
+serietv:Genere rdf:type owl:Class ;
+               rdfs:subClassOf db:genre ;
+               rdfs:comment "Genere di una serie tv"@it ,
+                            "Genre of a tv series"@en ;
+               rdfs:label "Genere"@it ,
+                          "Genre"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Ideatore
+serietv:Ideatore rdf:type owl:Class ;
+                 rdfs:subClassOf serietv:Ruolo ;
+                 rdfs:comment "Role as a creator of a tv series"@en ,
+                              "Ruolo di un ideatore / ideatrice nella serie tv"@it ;
+                 rdfs:label "CreatedBy"@en ,
+                            "Ideatore"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#IdeatoreSerie
+serietv:IdeatoreSerie rdf:type owl:Class ;
+                      owl:equivalentClass [ rdf:type owl:Restriction ;
+                                            owl:onProperty serietv:persona_ha_ruolo ;
+                                            owl:someValuesFrom serietv:Ideatore
+                                          ] ;
+                      rdfs:subClassOf serietv:Persona ,
+                                      <http://xmlns.com/foaf/0.1/Person> ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty serietv:persona_ha_ruolo ;
+                                        owl:someValuesFrom serietv:Ideatore
+                                      ] ;
+                      rdfs:comment "Person who has role of creator of a tv series"@en ,
+                                   "Persona che ha ruolo di ideatore / ideatrice di una serie tv"@it ;
+                      rdfs:label "IdeatoreSerie"@it ,
+                                 "SeriesCreatedBy"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Italia
+serietv:Italia rdf:type owl:Class ;
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:oneOf ( serietv:Italia
+                                               )
+                                   ] ;
+               rdfs:subClassOf serietv:Paese ,
+                               [ rdf:type owl:Class ;
+                                 owl:oneOf ( serietv:Brasile
+                                             serietv:Italia
+                                             serietv:USA
+                                           )
+                               ] ,
+                               [ rdf:type owl:Class ;
+                                 owl:oneOf ( serietv:Italia
+                                           )
+                               ] .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Medico
+serietv:Medico rdf:type owl:Class ;
+               rdfs:subClassOf db:genre ,
+                               serietv:Genere ;
+               rdfs:comment "Genere medico"@it ,
+                            "Medical genre"@en ;
+               rdfs:label "Medical"@en ,
+                          "Medico"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Miniserie
+serietv:Miniserie rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                               owl:onProperty part:hasPart ;
+                                                               owl:someValuesFrom serietv:Stagione
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty serietv:numero_episodi ;
+                                                               owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                                                    owl:withRestrictions ( [ xsd:maxInclusive "11"^^xsd:nonNegativeInteger
+                                                                                                           ]
+                                                                                                         )
+                                                                                  ]
+                                                             ]
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty serietv:numero_stagioni ;
+                                                               owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                    owl:onDatatype xsd:nonNegativeInteger ;
+                                                                                    owl:withRestrictions ( [ xsd:maxExclusive "2"^^xsd:nonNegativeInteger
+                                                                                                           ]
+                                                                                                         )
+                                                                                  ]
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                  rdfs:subClassOf serietv:SerieTelevisiva ,
+                                  [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                           owl:onProperty part:hasPart ;
+                                                           owl:someValuesFrom serietv:Stagione
+                                                         ]
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty serietv:numero_episodi ;
+                                                           owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                owl:onDatatype xsd:nonNegativeInteger ;
+                                                                                owl:withRestrictions ( [ xsd:maxInclusive "11"^^xsd:nonNegativeInteger
+                                                                                                       ]
+                                                                                                     )
+                                                                              ]
+                                                         ]
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty serietv:numero_stagioni ;
+                                                           owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                owl:onDatatype xsd:nonNegativeInteger ;
+                                                                                owl:withRestrictions ( [ xsd:maxExclusive "2"^^xsd:nonNegativeInteger
+                                                                                                       ]
+                                                                                                     )
+                                                                              ]
+                                                         ]
+                                                       ) ;
+                                    rdf:type owl:Class
+                                  ] ,
+                                  [ rdf:type owl:Class ;
+                                    owl:unionOf ( serietv:Episodio
+                                                  serietv:SerieTelevisiva
+                                                )
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty part:hasPart ;
+                                    owl:someValuesFrom serietv:Stagione
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty serietv:numero_episodi ;
+                                    owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                         owl:onDatatype xsd:nonNegativeInteger ;
+                                                         owl:withRestrictions ( [ xsd:maxInclusive "11"^^xsd:nonNegativeInteger
+                                                                                ]
+                                                                              )
+                                                       ]
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty serietv:numero_stagioni ;
+                                    owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                         owl:onDatatype xsd:nonNegativeInteger ;
+                                                         owl:withRestrictions ( [ xsd:maxExclusive "2"^^xsd:nonNegativeInteger
+                                                                                ]
+                                                                              )
+                                                       ]
+                                  ] ;
+                  rdfs:comment "A miniseries is a tv series where the number of episodes are at maximum 20 and they have only a single season"@en ,
+                               "Una Miniserie è una serie tv dove il numero di episodi è al massimo 20 e ha una sola stagione"@it ;
+                  rdfs:label "Miniserie"@it ,
+                             "Miniseries"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Orrore
+serietv:Orrore rdf:type owl:Class ;
+               rdfs:subClassOf db:genre ,
+                               serietv:Genere ;
+               rdfs:comment "Genere orrore"@it ,
+                            "Horror genre"@en ;
+               rdfs:label "Horror"@en ,
+                          "Orrore"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Paese
+serietv:Paese rdf:type owl:Class ;
+              owl:equivalentClass [ rdf:type owl:Class ;
+                                    owl:oneOf ( serietv:Brasile
+                                                serietv:Italia
+                                                serietv:USA
+                                              )
+                                  ] ;
+              rdfs:subClassOf [ rdf:type owl:Class ;
+                                owl:oneOf ( serietv:Brasile
+                                            serietv:Italia
+                                            serietv:USA
+                                          )
+                              ] ;
+              owl:disjointUnionOf ( serietv:Brasile
+                                    serietv:Italia
+                                    serietv:USA
+                                  ) ;
+              rdfs:comment "Classe enumerata di paesi"@it ,
+                           "Enumerated class of countries"@en ;
+              rdfs:label "Country"@en ,
+                         "Paese"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Persona
+serietv:Persona rdf:type owl:Class ;
+                owl:equivalentClass <http://xmlns.com/foaf/0.1/Person> ;
+                rdfs:subClassOf <http://xmlns.com/foaf/0.1/Person> ;
+                rdfs:comment "A person"@en ,
+                             "Una persona"@it ;
+                rdfs:label "Person"@en ,
+                           "Persona"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Personaggio
+serietv:Personaggio rdf:type owl:Class ;
+                    rdfs:comment "Character of a tv series interpreted by an actor"@en ,
+                                 "Personaggio di una serie tv interpretato da un attore / attrice"@it ;
+                    rdfs:label "Character"@en ,
+                               "Personaggio"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Produttore
+serietv:Produttore rdf:type owl:Class ;
+                   rdfs:subClassOf serietv:Ruolo ;
+                   rdfs:comment "Role as a producer of a tv series"@en ,
+                                "Ruolo di produttore / produttrice di una serie tv"@it ;
+                   rdfs:label "Producer"@en ,
+                              "Produttore"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#ProduttoreSerie
+serietv:ProduttoreSerie rdf:type owl:Class ;
+                        owl:equivalentClass [ rdf:type owl:Restriction ;
+                                              owl:onProperty serietv:persona_ha_ruolo ;
+                                              owl:someValuesFrom serietv:Produttore
+                                            ] ;
+                        rdfs:subClassOf serietv:Persona ,
+                                        <http://xmlns.com/foaf/0.1/Person> ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty serietv:persona_ha_ruolo ;
+                                          owl:someValuesFrom serietv:Produttore
+                                        ] ;
+                        rdfs:comment "Person who has role of producer of a tv series"@en ,
+                                     "Persona che ha ruolo di produttore / produttrice di una serie tv"@it ;
+                        rdfs:label "ProduttoreSerie"@it ,
+                                   "SeriesProducer"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Ruolo
+serietv:Ruolo rdf:type owl:Class ;
+              rdfs:comment "Role inside a tv series"@en ,
+                           "Ruolo all'interno di una serie tv"@it ;
+              rdfs:label "Role"@en ,
+                         "Ruolo"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Sentimentale
+serietv:Sentimentale rdf:type owl:Class ;
+                     rdfs:subClassOf db:genre ,
+                                     serietv:Genere ;
+                     rdfs:comment "Sentimental genre"@en ,
+                                  "genere sentimentale"@it ;
+                     rdfs:label "Sentimental"@en ,
+                                "Sentimentale"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#SeriePiu10Stagioni
+serietv:SeriePiu10Stagioni rdf:type owl:Class ;
+                           rdfs:comment "Serie con più di 10 stagioni"@it ,
+                                        "Series with more then 10 seasons"@en ;
+                           rdfs:label "SeriePiu10Stagioni"@it ,
+                                      "SeriesMoreThan10Seasons"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#SerieSecoloScorso
+serietv:SerieSecoloScorso rdf:type owl:Class ;
+                          rdfs:comment "Serie del secolo scorso"@it ,
+                                       "Series of the last century"@en ;
+                          rdfs:label "SerieSecoloScorso"@it ,
+                                     "SeriesLastCentury"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#SerieTelevisiva
+serietv:SerieTelevisiva rdf:type owl:Class ;
+                        owl:equivalentClass [ rdf:type owl:Restriction ;
+                                              owl:onProperty part:hasPart ;
+                                              owl:someValuesFrom serietv:Stagione
+                                            ] ;
+                        rdfs:subClassOf [ rdf:type owl:Class ;
+                                          owl:unionOf ( serietv:Episodio
+                                                        serietv:SerieTelevisiva
+                                                      )
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty part:hasPart ;
+                                          owl:someValuesFrom serietv:Stagione
+                                        ] ;
+                        rdfs:comment "A television series"@en ,
+                                     "Una serie televisiva"@it ;
+                        rdfs:label "SerieTelevisiva"@it ,
+                                   "TelevisionSeries"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Stagione
+serietv:Stagione rdf:type owl:Class ;
+                 rdfs:comment "Season of a tv series"@en ,
+                              "Stagione di una serie tv"@it ;
+                 rdfs:label "Season"@en ,
+                            "Stagione"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Thriller
+serietv:Thriller rdf:type owl:Class ;
+                 rdfs:subClassOf db:genre ,
+                                 serietv:Genere ;
+                 rdfs:comment "Thriller genre"@en ,
+                              "genere thriller"@it ;
+                 rdfs:label "Thriller"@en ,
+                            "Thriller"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#USA
+serietv:USA rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Class ;
+                                  owl:oneOf ( serietv:USA
+                                            )
+                                ] ;
+            rdfs:subClassOf serietv:Paese ,
+                            [ rdf:type owl:Class ;
+                              owl:oneOf ( serietv:Brasile
+                                          serietv:Italia
+                                          serietv:USA
+                                        )
+                            ] ,
+                            [ rdf:type owl:Class ;
+                              owl:oneOf ( serietv:USA
+                                        )
+                            ] .
+
+
+###  http://xmlns.com/foaf/0.1/Person
+<http://xmlns.com/foaf/0.1/Person> rdf:type owl:Class ;
+                                   rdfs:subClassOf serietv:Persona ;
+                                   rdfs:comment "Person defined by friend of a friend vocabulary"@en ,
+                                                "Persona definita dal vocabolario friend of a friend"@it ;
+                                   rdfs:label "foaf:Person"@en ,
+                                              "foaf:Person"@it .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://dbpedia.org/ontology/Stranger_Things
+<http://dbpedia.org/ontology/Stranger_Things> rdf:type owl:NamedIndividual ;
+                                              rdfs:comment "Stranger things according to dbpedia vocabulary"@en ,
+                                                           "Stranger things secondo il vocabolario dbpedia"@it ;
+                                              rdfs:label "stranger_thing"@it ,
+                                                         "stranger_things"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Brasile
+serietv:Brasile rdf:type owl:NamedIndividual ,
+                         serietv:Brasile ,
+                         serietv:Paese ,
+                         [ rdf:type owl:Class ;
+                           owl:oneOf ( serietv:Brasile
+                                     )
+                         ] ,
+                         [ rdf:type owl:Class ;
+                           owl:oneOf ( serietv:Brasile
+                                       serietv:Italia
+                                       serietv:USA
+                                     )
+                         ] .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Brazil
+serietv:Brazil rdf:type owl:NamedIndividual ,
+                        serietv:SerieSecoloScorso ,
+                        serietv:SerieTelevisiva ,
+                        [ rdf:type owl:Class ;
+                          owl:unionOf ( serietv:Episodio
+                                        serietv:SerieTelevisiva
+                                      )
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty part:hasPart ;
+                          owl:someValuesFrom serietv:Stagione
+                        ] ;
+               part:hasPart serietv:brazil1 ,
+                            serietv:isso_acontece ;
+               serietv:serieHaGenere serietv:genereCommedia ;
+               serietv:serie_ha_cast serietv:cast_brazil ;
+               serietv:serie_ha_intervallo serietv:intervallo_brazil ;
+               serietv:serie_ha_paese serietv:Brasile ;
+               serietv:serie_ha_personaggio serietv:eduardo_lusceno ;
+               serietv:conclusa "si"^^xsd:string ;
+               serietv:numero_episodi 11 ;
+               serietv:numero_stagioni 1 ;
+               serietv:titolo "Brazil"@en ,
+                              "Brazil"@it ;
+               rdfs:comment "Brazilian miniseries"@en ,
+                            "Miniserie brasiliana"@it ;
+               rdfs:label "Brazil"@en ,
+                          "Brazil"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#GreysAnatomy
+serietv:GreysAnatomy rdf:type owl:NamedIndividual ,
+                              serietv:SerieTelevisiva ,
+                              [ rdf:type owl:Class ;
+                                owl:unionOf ( serietv:Episodio
+                                              serietv:SerieTelevisiva
+                                            )
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty part:hasPart ;
+                                owl:someValuesFrom serietv:Stagione
+                              ] ;
+                     part:hasPart serietv:greys_anatomy1 ,
+                                  serietv:quando_il_gioco_si_fa_duro ;
+                     serietv:serieHaGenere serietv:genereDrammatico ,
+                                           serietv:genereMedico ,
+                                           serietv:genereSentimentale ;
+                     serietv:serie_ha_cast serietv:cast_greys_anatomy ;
+                     serietv:serie_ha_intervallo serietv:intervallo_greys_anatomy ;
+                     serietv:serie_ha_paese serietv:USA ;
+                     serietv:serie_ha_personaggio serietv:meredith_grey ;
+                     serietv:numero_episodi 368 ;
+                     serietv:numero_stagioni 17 ;
+                     serietv:titolo "Grey's anatomy"@en ,
+                                    "Grey's anatomy"@it ;
+                     rdfs:comment "Serie USA"@it ,
+                                  "USA series"@en ;
+                     rdfs:label "GreysAnatomy"@en ,
+                                "GreysAnatomy"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#ICesaroni
+serietv:ICesaroni rdf:type owl:NamedIndividual ,
+                           serietv:SerieTelevisiva ,
+                           [ rdf:type owl:Class ;
+                             owl:unionOf ( serietv:Episodio
+                                           serietv:SerieTelevisiva
+                                         )
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty part:hasPart ;
+                             owl:someValuesFrom serietv:Stagione
+                           ] ;
+                  part:hasPart serietv:i_cesaroni1 ,
+                               serietv:promessi_sposi ;
+                  serietv:serieHaGenere serietv:genereCommedia ,
+                                        serietv:genereDrammaFamigliare ,
+                                        serietv:genereSentimentale ;
+                  serietv:serie_ha_cast serietv:cast_i_cesaroni ;
+                  serietv:serie_ha_intervallo serietv:intervallo_i_cesaroni ;
+                  serietv:serie_ha_paese serietv:Italia ;
+                  serietv:serie_ha_personaggio serietv:giulio_cesaroni ;
+                  serietv:conclusa "si"^^xsd:string ;
+                  serietv:numero_episodi 142 ;
+                  serietv:numero_stagioni 6 ;
+                  serietv:titolo "I cesaroni"@en ,
+                                 "I cesaroni"@it ;
+                  rdfs:comment "Italian series"@en ,
+                               "Serie italiana"@it ;
+                  rdfs:label "ICesaroni"@en ,
+                             "ICesaroni"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#Italia
+serietv:Italia rdf:type owl:NamedIndividual ,
+                        serietv:Italia ,
+                        serietv:Paese ,
+                        [ rdf:type owl:Class ;
+                          owl:oneOf ( serietv:Brasile
+                                      serietv:Italia
+                                      serietv:USA
+                                    )
+                        ] ,
+                        [ rdf:type owl:Class ;
+                          owl:oneOf ( serietv:Italia
+                                    )
+                        ] .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#LaReginaDegliScacchi
+serietv:LaReginaDegliScacchi rdf:type owl:NamedIndividual ,
+                                      serietv:SerieTelevisiva ,
+                                      [ rdf:type owl:Class ;
+                                        owl:unionOf ( serietv:Episodio
+                                                      serietv:SerieTelevisiva
+                                                    )
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty part:hasPart ;
+                                        owl:someValuesFrom serietv:Stagione
+                                      ] ;
+                             part:hasPart serietv:aperture ,
+                                          serietv:la_regina_degli_scacchi1 ;
+                             serietv:serieHaGenere serietv:genereDrammatico ;
+                             serietv:serie_ha_cast serietv:cast_la_regina_degli_scacchi ;
+                             serietv:serie_ha_intervallo serietv:intervallo_la_regina_degli_scacchi ;
+                             serietv:serie_ha_paese serietv:USA ;
+                             serietv:serie_ha_personaggio serietv:william_shaibel ;
+                             serietv:conclusa "si"^^xsd:string ;
+                             serietv:numero_episodi 7 ;
+                             serietv:numero_stagioni 1 ;
+                             serietv:titolo "La regina degli scacchi"@it ,
+                                            "The queen's gambit"@en ;
+                             rdfs:comment "Miniserie USA"@it ,
+                                          "USA miniseries"@en ;
+                             rdfs:label "LaReginaDegliScacchi"@it ,
+                                        "TheQueensGambit"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#StrangerThings
+serietv:StrangerThings rdf:type owl:NamedIndividual ,
+                                serietv:SerieTelevisiva ,
+                                [ rdf:type owl:Class ;
+                                  owl:unionOf ( serietv:Episodio
+                                                serietv:SerieTelevisiva
+                                              )
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty part:hasPart ;
+                                  owl:someValuesFrom serietv:Stagione
+                                ] ;
+                       part:hasPart serietv:stranger_things1 ;
+                       serietv:serieHaGenere serietv:genereDrammatico ,
+                                             serietv:genereFantascienza ,
+                                             serietv:genereOrrore ,
+                                             serietv:genereThriller ;
+                       serietv:serie_ha_cast serietv:cast_stranger_things ;
+                       serietv:serie_ha_intervallo serietv:intervallo_stranger_things ;
+                       serietv:serie_ha_paese serietv:USA ;
+                       serietv:serie_ha_personaggio serietv:joyce_byers ;
+                       serietv:numero_episodi 33 ;
+                       serietv:numero_stagioni 4 ;
+                       serietv:titolo "Stranger Things" ;
+                       rdfs:comment "Serie USA"@it ,
+                                    "USA series"@en ;
+                       rdfs:label "StrangerThings"@en ,
+                                  "StrangerThings"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#USA
+serietv:USA rdf:type owl:NamedIndividual ,
+                     serietv:Paese ,
+                     serietv:USA ,
+                     [ rdf:type owl:Class ;
+                       owl:oneOf ( serietv:Brasile
+                                   serietv:Italia
+                                   serietv:USA
+                                 )
+                     ] ,
+                     [ rdf:type owl:Class ;
+                       owl:oneOf ( serietv:USA
+                                 )
+                     ] .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#antonio_fagundes
+serietv:antonio_fagundes rdf:type owl:NamedIndividual ,
+                                  serietv:AttoreSerie ,
+                                  serietv:Persona ,
+                                  <http://xmlns.com/foaf/0.1/Person> ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty serietv:persona_ha_ruolo ;
+                                    owl:someValuesFrom serietv:Attore
+                                  ] ;
+                         serietv:interpreta serietv:eduardo_lusceno ;
+                         serietv:persona_ha_ruolo serietv:attori_brazil ;
+                         rdfs:comment "Actor of the brazilian miniseries Brazil"@en ,
+                                      "Attore nella miniserie brasiliana Brazil"@it ;
+                         rdfs:label "AntonioFagundes"@en ,
+                                    "AntonioFagundes"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#aperture
+serietv:aperture rdf:type owl:NamedIndividual ,
+                          serietv:Episodio ,
+                          [ rdf:type owl:Class ;
+                            owl:unionOf ( serietv:Episodio
+                                          serietv:SerieTelevisiva
+                                        )
+                          ] ;
+                 part:isPartOf serietv:LaReginaDegliScacchi ,
+                               serietv:la_regina_degli_scacchi1 ;
+                 serietv:episodioFattoIn serietv:USA ;
+                 serietv:titolo "Aperture"@it ,
+                                "Openings"@en ;
+                 rdfs:comment "Episode of the USA miniseries The queens gambit"@en ,
+                              "Episodio della miniserie USA La regina degli scacchi"@it ;
+                 rdfs:label "Aperture"@it ,
+                            "Openings"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#armando_costa
+serietv:armando_costa rdf:type owl:NamedIndividual ,
+                               serietv:IdeatoreSerie ,
+                               serietv:Persona ,
+                               <http://xmlns.com/foaf/0.1/Person> ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty serietv:persona_ha_ruolo ;
+                                 owl:someValuesFrom serietv:Ideatore
+                               ] ;
+                      serietv:persona_ha_ruolo serietv:ideatori_brazil ;
+                      rdfs:comment "Creator of the brazilian miniseries Brazil"@en ,
+                                   "Ideatore della miniserie brasiliana Brazil"@it ;
+                      rdfs:label "ArmandoCosta"@en ,
+                                 "ArmandoCosta"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#attori_brazil
+serietv:attori_brazil rdf:type owl:NamedIndividual ,
+                               serietv:Attore ,
+                               serietv:Ruolo ;
+                      rdfs:comment "Collection of actors / actresses of the brazilian miniseries Brazil"@en ,
+                                   "Insieme di attori / attrici della miniserie brasiliana Brazil"@it ;
+                      rdfs:label "AttoriBrazil"@it ,
+                                 "BrazilActors"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#attori_greys_anatomy
+serietv:attori_greys_anatomy rdf:type owl:NamedIndividual ,
+                                      serietv:Attore ,
+                                      serietv:Ruolo ;
+                             rdfs:comment "Collection of actors / acctresses of the USA series Greys Anatomy"@en ,
+                                          "Insieme degli attori / attrici della serie USA Greys Anatomy"@it ;
+                             rdfs:label "AttoriGreysAnatomy"@it ,
+                                        "GreysAnatomyActors"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#attori_i_cesaroni
+serietv:attori_i_cesaroni rdf:type owl:NamedIndividual ,
+                                   serietv:Attore ,
+                                   serietv:Ruolo ;
+                          rdfs:comment "Collection of actors / actresses of the italian series I cesaroni"@en ,
+                                       "Insieme di attori / attrici della serie italiana I Cesaroni"@it ;
+                          rdfs:label "AttoriICesaroni"@it ,
+                                     "ICesaroniActors"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#attori_la_regina_degli_scacchi
+serietv:attori_la_regina_degli_scacchi rdf:type owl:NamedIndividual ,
+                                                serietv:Attore ,
+                                                serietv:Ruolo ;
+                                       rdfs:comment "Collection of actors / actresses of the USA miniseries The queens Gambit"@en ,
+                                                    "insieme di attori / attrici della miniserie USA La regina degli scacchi"@it ;
+                                       rdfs:label "AttoriLaReginaDegliScacchi"@it ,
+                                                  "TheQueensGambitActors"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#attori_stranger_things
+serietv:attori_stranger_things rdf:type owl:NamedIndividual ,
+                                        serietv:Attore ,
+                                        serietv:Ruolo ;
+                               rdfs:comment "Collection of actors / actresses of the USA series Stranger things"@en ,
+                                            "Insieme degli attori / attrici della serie USA Stranger things"@it ;
+                               rdfs:label "AttoriStrangerThings"@it ,
+                                          "StrangerThingsActors"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#bill_camp
+serietv:bill_camp rdf:type owl:NamedIndividual ,
+                           serietv:AttoreSerie ,
+                           serietv:Persona ,
+                           <http://xmlns.com/foaf/0.1/Person> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty serietv:persona_ha_ruolo ;
+                             owl:someValuesFrom serietv:Attore
+                           ] ;
+                  serietv:interpreta serietv:william_shaibel ;
+                  serietv:persona_ha_ruolo serietv:attori_la_regina_degli_scacchi ;
+                  rdfs:comment "Actor of the USA miniseries The queens gambit"@en ,
+                               "Attore della miniserie USA La regina degli scacchi"@it ;
+                  rdfs:label "BillCamp"@en ,
+                             "BillCamp"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#brazil1
+serietv:brazil1 rdf:type owl:NamedIndividual ,
+                         serietv:Stagione ;
+                part:hasPart serietv:isso_acontece ;
+                part:isPartOf serietv:Brazil ;
+                rdfs:comment "First season of the brazilian miniseries Brazil"@en ,
+                             "Prima stagione della miniserie brasiliana Brazil"@it ;
+                rdfs:label "Brazil1"@en ,
+                           "Brazil1"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#carlo_bixio
+serietv:carlo_bixio rdf:type owl:NamedIndividual ,
+                             serietv:Persona ,
+                             serietv:ProduttoreSerie ,
+                             <http://xmlns.com/foaf/0.1/Person> ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty serietv:persona_ha_ruolo ;
+                               owl:someValuesFrom serietv:Produttore
+                             ] ;
+                    serietv:persona_ha_ruolo serietv:produttori_i_cesaroni ;
+                    rdfs:comment "Producer of the italian series I cesaroni"@en ,
+                                 "Produttore della serie italiana I cesaroni"@it ;
+                    rdfs:label "CarloBixio"@en ,
+                               "CarloBixio"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#cast_brazil
+serietv:cast_brazil rdf:type owl:NamedIndividual ,
+                             serietv:Cast ;
+                    serietv:castContienePersona serietv:antonio_fagundes ,
+                                                serietv:armando_costa ;
+                    rdfs:comment "Cast delle persone che appartengono alla miniserie brasiliana Brazil"@it ,
+                                 "Cast of people that belong to brazilian miniseries Brazil"@en ;
+                    rdfs:label "BrazilCast"@en ,
+                               "CastBrazil"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#cast_greys_anatomy
+serietv:cast_greys_anatomy rdf:type owl:NamedIndividual ,
+                                    serietv:Cast ;
+                           serietv:castContienePersona serietv:ellen_pompeo ,
+                                                       serietv:shonda_rhimes ;
+                           rdfs:comment "Cast delle eprsone che appartengono alla serie USA Greys Anatomy"@it ,
+                                        "Cast of people that belong to USA series Greys Anatomy"@en ;
+                           rdfs:label "CastGreysAnatomy"@it ,
+                                      "GreysAnatomyCast"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#cast_i_cesaroni
+serietv:cast_i_cesaroni rdf:type owl:NamedIndividual ,
+                                 serietv:Cast ;
+                        serietv:castContienePersona serietv:carlo_bixio ,
+                                                    serietv:claudio_amendola ,
+                                                    serietv:francesco_vicario ;
+                        rdfs:comment "Cast delle persone che appartengono alla serie italiana I cesaroni"@it ,
+                                     "Cast of people that belong to italian series I cesaroni"@en ;
+                        rdfs:label "CastICesaroni"@it ,
+                                   "ICesaroniCast"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#cast_la_regina_degli_scacchi
+serietv:cast_la_regina_degli_scacchi rdf:type owl:NamedIndividual ,
+                                              serietv:Cast ;
+                                     serietv:castContienePersona serietv:scott_frank ,
+                                                                 serietv:william_horberg ;
+                                     rdfs:comment "Cast dellepersone che appartengono alla miniserie USA La regina degli scacchi"@it ,
+                                                  "Cast of people that belong to USA miniseries The queens gambit"@en ;
+                                     rdfs:label "CastLaReginaDegliScacchi"@it ,
+                                                "TheQueensGambitCast"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#cast_stranger_things
+serietv:cast_stranger_things rdf:type owl:NamedIndividual ,
+                                      serietv:Cast ;
+                             serietv:castContienePersona serietv:dan_cohen ,
+                                                         serietv:matt_duffer ,
+                                                         serietv:ross_duffer ,
+                                                         serietv:winora_rider ;
+                             rdfs:comment "Cast delle persone che appartengono alla serie USA Stranger things"@it ,
+                                          "Cast of people that belong to USA series Stranger things"@en ;
+                             rdfs:label "CastStrangerThings"@it ,
+                                        "StrangerThingsCast"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#claudio_amendola
+serietv:claudio_amendola rdf:type owl:NamedIndividual ,
+                                  serietv:AttoreSerie ,
+                                  serietv:Persona ,
+                                  <http://xmlns.com/foaf/0.1/Person> ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty serietv:persona_ha_ruolo ;
+                                    owl:someValuesFrom serietv:Attore
+                                  ] ;
+                         serietv:interpreta serietv:giulio_cesaroni ;
+                         serietv:persona_ha_ruolo serietv:attori_i_cesaroni ;
+                         rdfs:comment "Actor of the italian series I cesaroni"@en ,
+                                      "Attore della serie italiana I cesaroni"@it ;
+                         rdfs:label "ClaudioAmendola"@en ,
+                                    "ClaudioAmendola"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#dan_cohen
+serietv:dan_cohen rdf:type owl:NamedIndividual ,
+                           serietv:Persona ,
+                           serietv:ProduttoreSerie ,
+                           <http://xmlns.com/foaf/0.1/Person> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty serietv:persona_ha_ruolo ;
+                             owl:someValuesFrom serietv:Produttore
+                           ] ;
+                  serietv:persona_ha_ruolo serietv:produttori_stranger_things ;
+                  rdfs:comment "Producer of the USA series Stranger things"@en ,
+                               "Produttore della serie USA Stranger things"@it ;
+                  rdfs:label "DanCohen"@en ,
+                             "DanCohen"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#eduardo_lusceno
+serietv:eduardo_lusceno rdf:type owl:NamedIndividual ,
+                                 serietv:Personaggio ;
+                        serietv:personaggio_di_serie serietv:Brazil ;
+                        serietv:personaggio_interpretato_da serietv:antonio_fagundes ;
+                        rdfs:comment "Character of the brazilian miniseries Brazil"@en ,
+                                     "Personaggio della miniserie brasiliana Brazil"@it ;
+                        rdfs:label "EduardoLusceno"@en ,
+                                   "EduardoLusceno"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#ellen_pompeo
+serietv:ellen_pompeo rdf:type owl:NamedIndividual ,
+                              serietv:AttoreSerie ,
+                              serietv:Persona ,
+                              <http://xmlns.com/foaf/0.1/Person> ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty serietv:persona_ha_ruolo ;
+                                owl:someValuesFrom serietv:Attore
+                              ] ;
+                     serietv:interpreta serietv:meredith_grey ;
+                     serietv:persona_ha_ruolo serietv:attori_greys_anatomy ;
+                     rdfs:comment "Actress of the USA series Greys Anatomy"@en ,
+                                  "Attrice della serie tv USA Greys Anatomy"@it ;
+                     rdfs:label "EllenPompeo"@en ,
+                                "EllenPompeo"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#francesco_vicario
+serietv:francesco_vicario rdf:type owl:NamedIndividual ,
+                                   serietv:IdeatoreSerie ,
+                                   serietv:Persona ,
+                                   <http://xmlns.com/foaf/0.1/Person> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty serietv:persona_ha_ruolo ;
+                                     owl:someValuesFrom serietv:Ideatore
+                                   ] ;
+                          serietv:persona_ha_ruolo serietv:ideatori_i_cesaroni ;
+                          rdfs:comment "Creator of the italian series I cesaroni"@en ,
+                                       "Ideatore della serie tv italiana I cesaroni"@it ;
+                          rdfs:label "FrancescoVicario"@en ,
+                                     "FrancescoVicario"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#genereCommedia
+serietv:genereCommedia rdf:type owl:NamedIndividual ,
+                                db:genre ,
+                                serietv:Commedia ,
+                                serietv:Genere ;
+                       rdfs:comment "Il genere commedia"@it ,
+                                    "The commedy genre"@en ;
+                       rdfs:label "CommedyGenre"@en ,
+                                  "GenereCommedia"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#genereDrammaFamigliare
+serietv:genereDrammaFamigliare rdf:type owl:NamedIndividual ,
+                                        db:genre ,
+                                        serietv:Dramma ,
+                                        serietv:DrammaFamigliare ,
+                                        serietv:Genere ;
+                               rdfs:comment "Il genere dramma famigliare"@it ,
+                                            "The familiar drama genre"@en ;
+                               rdfs:label "FamiliarDramaGenre"@en ,
+                                          "GenereDrammaFamigliare"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#genereDrammatico
+serietv:genereDrammatico rdf:type owl:NamedIndividual ,
+                                  db:genre ,
+                                  serietv:Drammatico ,
+                                  serietv:Genere ;
+                         rdfs:comment "Il genere drammatico"@it ,
+                                      "The drammatic genre"@en ;
+                         rdfs:label "DrammaticGenre"@en ,
+                                    "genereDrammatico"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#genereFantascienza
+serietv:genereFantascienza rdf:type owl:NamedIndividual ,
+                                    db:genre ,
+                                    serietv:Fantascienza ,
+                                    serietv:Genere ;
+                           rdfs:comment "Il genere fantascienza"@it ,
+                                        "The scence fiction genre"@en ;
+                           rdfs:label "ScienceFictionGenre"@en ,
+                                      "genereFantascienza"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#genereMedico
+serietv:genereMedico rdf:type owl:NamedIndividual ,
+                              db:genre ,
+                              serietv:Genere ,
+                              serietv:Medico ;
+                     rdfs:comment "Il genere medico"@it ,
+                                  "The medical genre"@en ;
+                     rdfs:label "MedicalGenre"@en ,
+                                "genereMedico"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#genereOrrore
+serietv:genereOrrore rdf:type owl:NamedIndividual ,
+                              db:genre ,
+                              serietv:Genere ,
+                              serietv:Orrore ;
+                     rdfs:comment "Il genere orrore"@it ,
+                                  "The horror genre"@en ;
+                     rdfs:label "HorrorGenre"@en ,
+                                "genereOrrore"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#genereSentimentale
+serietv:genereSentimentale rdf:type owl:NamedIndividual ,
+                                    db:genre ,
+                                    serietv:Genere ,
+                                    serietv:Sentimentale ;
+                           rdfs:comment "Il genere sentimentale"@it ,
+                                        "The sentimental genre"@en ;
+                           rdfs:label "SentimentalGenre"@en ,
+                                      "genereSentimentale"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#genereThriller
+serietv:genereThriller rdf:type owl:NamedIndividual ,
+                                db:genre ,
+                                serietv:Genere ,
+                                serietv:Thriller ;
+                       rdfs:comment "Il genere thriller"@it ,
+                                    "The thriller genre"@en ;
+                       rdfs:label "ThrillerGenre"@en ,
+                                  "genereThriller"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#giulio_cesaroni
+serietv:giulio_cesaroni rdf:type owl:NamedIndividual ,
+                                 serietv:Personaggio ;
+                        serietv:personaggio_di_serie serietv:ICesaroni ;
+                        serietv:personaggio_interpretato_da serietv:claudio_amendola ;
+                        rdfs:comment "Character of the italian series I cesaroni"@en ,
+                                     "Personaggio della serie italiana I cesaroni"@it ;
+                        rdfs:label "GiulioCesaroni"@en ,
+                                   "GiulioCesaroni"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#greys_anatomy1
+serietv:greys_anatomy1 rdf:type owl:NamedIndividual ,
+                                serietv:Stagione ;
+                       part:hasPart serietv:quando_il_gioco_si_fa_duro ;
+                       part:isPartOf serietv:GreysAnatomy ;
+                       rdfs:comment "First season of USA series Greys Anatomy"@en ,
+                                    "Prima stagione della serie USA Greys Anatomy"@it ;
+                       rdfs:label "GreysAnatomy1"@en ,
+                                  "GreysAnatomy1"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#i_cesaroni1
+serietv:i_cesaroni1 rdf:type owl:NamedIndividual ,
+                             serietv:Stagione ;
+                    part:hasPart serietv:promessi_sposi ;
+                    part:isPartOf serietv:ICesaroni ;
+                    rdfs:comment "First season of the italian series I cesaroni"@en ,
+                                 "Prima stagione della serie italiana I cesaroni"@it ;
+                    rdfs:label "ICesaroni1"@en ,
+                               "ICesaroni1"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#ideatori_brazil
+serietv:ideatori_brazil rdf:type owl:NamedIndividual ,
+                                 serietv:Ideatore ,
+                                 serietv:Ruolo ;
+                        rdfs:comment "Collection of creators of the brazilian series Brazil"@en ,
+                                     "Insieme di ideatori / ideatrici della serie tv brasiliana Brazil"@it ;
+                        rdfs:label "BrazilCreators"@en ,
+                                   "IdeatoriBrazil"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#ideatori_greys_anatomy
+serietv:ideatori_greys_anatomy rdf:type owl:NamedIndividual ,
+                                        serietv:Ideatore ,
+                                        serietv:Ruolo ;
+                               rdfs:comment "Collection of creators of the USA series Greys Anatomy"@en ,
+                                            "Insieme di ideatori / ideatrici della serie USA Greys Anatomy"@it ;
+                               rdfs:label "GreysAnatomyCreators"@en ,
+                                          "IdeatoriGreysAnatomy"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#ideatori_i_cesaroni
+serietv:ideatori_i_cesaroni rdf:type owl:NamedIndividual ,
+                                     serietv:Ideatore ,
+                                     serietv:Ruolo ;
+                            rdfs:comment "Collection of creators of the italian series I cesaroni"@en ,
+                                         "Insieme di ideatori / ideatrici della serie italiana I cesaroni"@it ;
+                            rdfs:label "ICesaroniCreators"@en ,
+                                       "IdeatoriICesaroni"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#ideatori_la_regina_degli_scacchi
+serietv:ideatori_la_regina_degli_scacchi rdf:type owl:NamedIndividual ,
+                                                  serietv:Ideatore ,
+                                                  serietv:Ruolo ;
+                                         rdfs:comment "Collection of creators of the USA miniseries The queens gambit"@en ,
+                                                      "Insieme di ideatori / ideatrici della miniserie USA La regina degli scacchi"@it ;
+                                         rdfs:label "IdeatoriLaReginaDegliScacchi"@it ,
+                                                    "TheQueensGambitCreators"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#ideatori_stranger_things
+serietv:ideatori_stranger_things rdf:type owl:NamedIndividual ,
+                                          serietv:Ideatore ,
+                                          serietv:Ruolo ;
+                                 rdfs:comment "Collection of creators of the USA series Stranger things"@en ,
+                                              "Insieme di ideatori / ideatrici della serie USA Stranger things"@it ;
+                                 rdfs:label "IdeatoriStrangerThings"@it ,
+                                            "StrangerThingsCreators"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#intervallo_brazil
+serietv:intervallo_brazil rdf:type owl:NamedIndividual ,
+                                   time:TimeInterval ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty time:hasIntervalEndDate ;
+                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty time:hasIntervalStartDate ;
+                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ;
+                          time:hasIntervalDate 1981 ;
+                          time:hasIntervalEndDate 1981 ;
+                          time:hasIntervalStartDate 1981 ;
+                          rdfs:comment "Intervallo di tempo della serie brasiliana Brazil"@it ,
+                                       "Time interval of the brazilian series Brazil"@en ;
+                          rdfs:label "BrazilInterval"@en ,
+                                     "IntervalloBrazil"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#intervallo_greys_anatomy
+serietv:intervallo_greys_anatomy rdf:type owl:NamedIndividual ,
+                                          time:TimeInterval ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty time:hasIntervalEndDate ;
+                                            owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty time:hasIntervalStartDate ;
+                                            owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                          ] ;
+                                 time:hasIntervalDate 2005 ;
+                                 time:hasIntervalStartDate 2005 ;
+                                 rdfs:comment "Intervallo di tempo della serie USA Greys Anatomy"@it ,
+                                              "Time interval of the USA series Greys Anatomy"@en ;
+                                 rdfs:label "GreysAnatomyInterval"@en ,
+                                            "IntervalloGreysAnatomy"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#intervallo_i_cesaroni
+serietv:intervallo_i_cesaroni rdf:type owl:NamedIndividual ,
+                                       time:TimeInterval ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty time:hasIntervalEndDate ;
+                                         owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty time:hasIntervalStartDate ;
+                                         owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                       ] ;
+                              time:hasIntervalDate 2006 ,
+                                                   2014 ;
+                              time:hasIntervalEndDate 2014 ;
+                              time:hasIntervalStartDate 2006 ;
+                              rdfs:comment "Intervallo di tempo della serie italiana I cesaroni"@it ,
+                                           "Time interval of the italian series I cesaroni"@en ;
+                              rdfs:label "ICesaroniInterval"@en ,
+                                         "IntervalloICesaroni"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#intervallo_la_regina_degli_scacchi
+serietv:intervallo_la_regina_degli_scacchi rdf:type owl:NamedIndividual ,
+                                                    time:TimeInterval ,
+                                                    [ rdf:type owl:Restriction ;
+                                                      owl:onProperty time:hasIntervalEndDate ;
+                                                      owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                                    ] ,
+                                                    [ rdf:type owl:Restriction ;
+                                                      owl:onProperty time:hasIntervalStartDate ;
+                                                      owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                                    ] ;
+                                           time:hasIntervalDate 2020 ;
+                                           time:hasIntervalEndDate 2020 ;
+                                           time:hasIntervalStartDate 2020 ;
+                                           rdfs:comment "Intervallo di tempo della miniserie USA La regina degli scacchi"@it ,
+                                                        "Time interval of the USA miniseries The queens gambit"@en ;
+                                           rdfs:label "IntervalloLaReginaDegliScacchi"@it ,
+                                                      "TheQueensGambitInterval"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#intervallo_stranger_things
+serietv:intervallo_stranger_things rdf:type owl:NamedIndividual ,
+                                            time:TimeInterval ,
+                                            [ rdf:type owl:Restriction ;
+                                              owl:onProperty time:hasIntervalEndDate ;
+                                              owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                            ] ,
+                                            [ rdf:type owl:Restriction ;
+                                              owl:onProperty time:hasIntervalStartDate ;
+                                              owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                            ] ;
+                                   time:hasIntervalDate 2016 ;
+                                   time:hasIntervalStartDate 2016 ;
+                                   rdfs:comment "Intervallo di tempo della serie USA Stranger things"@it ,
+                                                "Time interval of the USA series Stranger things"@en ;
+                                   rdfs:label "IntervalloStrangerThings"@it ,
+                                              "StrangerThingsInterval"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#isso_acontece
+serietv:isso_acontece rdf:type owl:NamedIndividual ,
+                               serietv:Episodio ,
+                               [ rdf:type owl:Class ;
+                                 owl:unionOf ( serietv:Episodio
+                                               serietv:SerieTelevisiva
+                                             )
+                               ] ;
+                      part:isPartOf serietv:Brazil ,
+                                    serietv:brazil1 ;
+                      serietv:episodioFattoIn serietv:Brasile ;
+                      serietv:titolo "Isso Acontece"@en ,
+                                     "Isso Acontece"@it ;
+                      rdfs:comment "Episode of the brazilian series Brazil"@en ,
+                                   "Episodio della serie brasiliana Brazil"@it ;
+                      rdfs:label "IssoAcontece"@en ,
+                                 "IssoAcontece"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#joyce_byers
+serietv:joyce_byers rdf:type owl:NamedIndividual ,
+                             serietv:Personaggio ;
+                    serietv:personaggio_di_serie serietv:StrangerThings ;
+                    serietv:personaggio_interpretato_da serietv:winora_rider ;
+                    rdfs:comment "Character of the USA series Stranger things"@en ,
+                                 "Personaggio della serie USA Stranger things"@it ;
+                    rdfs:label "JoyceByers"@en ,
+                               "JoyceByers"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#la_regina_degli_scacchi1
+serietv:la_regina_degli_scacchi1 rdf:type owl:NamedIndividual ,
+                                          serietv:Stagione ;
+                                 part:hasPart serietv:aperture ;
+                                 part:isPartOf serietv:LaReginaDegliScacchi ;
+                                 rdfs:comment "First season of the USA miniseries The queens gambit"@en ,
+                                              "Prima stagione della miniserie USA La regina degli scacchi"@it ;
+                                 rdfs:label "LaReginaDegliScacchi1"@it ,
+                                            "TheQueensGambit1"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#matt_duffer
+serietv:matt_duffer rdf:type owl:NamedIndividual ,
+                             serietv:IdeatoreSerie ,
+                             serietv:Persona ,
+                             serietv:ProduttoreSerie ,
+                             <http://xmlns.com/foaf/0.1/Person> ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty serietv:persona_ha_ruolo ;
+                               owl:someValuesFrom serietv:Ideatore
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty serietv:persona_ha_ruolo ;
+                               owl:someValuesFrom serietv:Produttore
+                             ] ;
+                    serietv:persona_ha_ruolo serietv:ideatori_stranger_things ,
+                                             serietv:produttori_stranger_things ;
+                    rdfs:comment "Creator and producer of the USA series Stranger things"@en ,
+                                 "Ideatore e produttore della serie USA Stranger things"@it ;
+                    rdfs:label "MattDuffer"@en ,
+                               "MattDuffer"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#meredith_grey
+serietv:meredith_grey rdf:type owl:NamedIndividual ,
+                               serietv:Personaggio ;
+                      serietv:personaggio_di_serie serietv:GreysAnatomy ;
+                      serietv:personaggio_interpretato_da serietv:ellen_pompeo ;
+                      rdfs:comment "Character of the USA series Greys anatomy"@en ,
+                                   "Personaggio della serie USA Greys Anatomy"@it ;
+                      rdfs:label "MeredithGrey"@en ,
+                                 "MeredithGrey"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#produttori_greys_anatomy
+serietv:produttori_greys_anatomy rdf:type owl:NamedIndividual ,
+                                          serietv:Produttore ,
+                                          serietv:Ruolo ;
+                                 rdfs:comment "Collection of producers of the USA series Greys anatomy"@en ,
+                                              "Insieme di produttori / produttrici della serie USA Greys Anatomy"@it ;
+                                 rdfs:label "GreysAnatomyProducers"@en ,
+                                            "ProduttoriGreysAnatomy"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#produttori_i_cesaroni
+serietv:produttori_i_cesaroni rdf:type owl:NamedIndividual ,
+                                       serietv:Produttore ,
+                                       serietv:Ruolo ;
+                              rdfs:comment "Collection of producers of the italian series I cesaroni"@en ,
+                                           "Insieme di produttori / produttrici della serie italiana I cesaroni"@it ;
+                              rdfs:label "ICesaroniProducers"@en ,
+                                         "ProduttoriICesaroni"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#produttori_la_regina_degli_scacchi
+serietv:produttori_la_regina_degli_scacchi rdf:type owl:NamedIndividual ,
+                                                    serietv:Produttore ,
+                                                    serietv:Ruolo ;
+                                           rdfs:comment "Collection of producers of the USA miniseries The queens gambit"@en ,
+                                                        "Insieme di produttori / produttrici della miniserie USA La regina degli scacchi"@it ;
+                                           rdfs:label "ProduttoriLaReginaDegliScacchi"@it ,
+                                                      "TheQueensGambitProducers"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#produttori_stranger_things
+serietv:produttori_stranger_things rdf:type owl:NamedIndividual ,
+                                            serietv:Produttore ,
+                                            serietv:Ruolo ;
+                                   rdfs:comment "Collection of producers of the USA series Stranger things"@en ,
+                                                "Insieme di produttori / produttrici della serie USA Stranger things"@it ;
+                                   rdfs:label "ProduttoriStrangerThings"@it ,
+                                              "StrangerThingsProducers"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#promessi_sposi
+serietv:promessi_sposi rdf:type owl:NamedIndividual ,
+                                serietv:Episodio ,
+                                [ rdf:type owl:Class ;
+                                  owl:unionOf ( serietv:Episodio
+                                                serietv:SerieTelevisiva
+                                              )
+                                ] ;
+                       part:isPartOf serietv:ICesaroni ,
+                                     serietv:i_cesaroni1 ;
+                       serietv:episodioFattoIn serietv:Italia ;
+                       serietv:titolo "Promess sposi"@en ,
+                                      "Promessi sposi"@it ;
+                       rdfs:comment "Episode of the italian series I cesaroni"@en ,
+                                    "Episodio della serie italiana I cesaroni"@it ;
+                       rdfs:label "PromessiSposi"@en ,
+                                  "PromessiSposi"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#quando_il_gioco_si_fa_duro
+serietv:quando_il_gioco_si_fa_duro rdf:type owl:NamedIndividual ,
+                                            serietv:Episodio ,
+                                            [ rdf:type owl:Class ;
+                                              owl:unionOf ( serietv:Episodio
+                                                            serietv:SerieTelevisiva
+                                                          )
+                                            ] ;
+                                   part:isPartOf serietv:GreysAnatomy ,
+                                                 serietv:greys_anatomy1 ;
+                                   serietv:episodioFattoIn serietv:USA ;
+                                   serietv:titolo "A hard day's night"@en ,
+                                                  "Quando il gioco si fa duro"@it ;
+                                   rdfs:comment "Episode of the USA series Greys Anatomy"@en ,
+                                                "Episodio della serie USA Greys Anatomy"@it ;
+                                   rdfs:label "AHardDaysNight"@en ,
+                                              "QuandoIlGiocoSiFaDuro"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#ross_duffer
+serietv:ross_duffer rdf:type owl:NamedIndividual ,
+                             serietv:IdeatoreSerie ,
+                             serietv:Persona ,
+                             <http://xmlns.com/foaf/0.1/Person> ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty serietv:persona_ha_ruolo ;
+                               owl:someValuesFrom serietv:Ideatore
+                             ] ;
+                    serietv:persona_ha_ruolo serietv:ideatori_stranger_things ;
+                    rdfs:comment "Creator of the USA series Stranger things"@en ,
+                                 "Ideatore della serie USA Stranger things"@it ;
+                    rdfs:label "RossDuffer"@en ,
+                               "RossDuffer"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#scott_frank
+serietv:scott_frank rdf:type owl:NamedIndividual ,
+                             serietv:IdeatoreSerie ,
+                             serietv:Persona ,
+                             <http://xmlns.com/foaf/0.1/Person> ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty serietv:persona_ha_ruolo ;
+                               owl:someValuesFrom serietv:Ideatore
+                             ] ;
+                    serietv:persona_ha_ruolo serietv:ideatori_la_regina_degli_scacchi ;
+                    rdfs:comment "Creator of the USA miniseries The queens gambit"@en ,
+                                 "Ideatore della miniserie USA La regina degli scacchi"@it ;
+                    rdfs:label "ScottFrank"@it ,
+                               "SscottFrank"@en .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#shonda_rhimes
+serietv:shonda_rhimes rdf:type owl:NamedIndividual ,
+                               serietv:IdeatoreSerie ,
+                               serietv:Persona ,
+                               serietv:ProduttoreSerie ,
+                               <http://xmlns.com/foaf/0.1/Person> ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty serietv:persona_ha_ruolo ;
+                                 owl:someValuesFrom serietv:Ideatore
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty serietv:persona_ha_ruolo ;
+                                 owl:someValuesFrom serietv:Produttore
+                               ] ;
+                      serietv:persona_ha_ruolo serietv:ideatori_greys_anatomy ,
+                                               serietv:produttori_greys_anatomy ;
+                      rdfs:comment "Creator an producer of the USA series Greys anatomy"@en ,
+                                   "Ideatrice e produttrice della serie USA Greys Anatomy"@it ;
+                      rdfs:label "ShondaRhimes"@en ,
+                                 "ShondaRhimes"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#stranger_things1
+serietv:stranger_things1 rdf:type owl:NamedIndividual ,
+                                  serietv:Stagione ;
+                         part:isPartOf serietv:StrangerThings ;
+                         rdfs:comment "First season of the USA series Stranger things"@en ,
+                                      "Prima stagione della serie USA Stranger things"@it ;
+                         rdfs:label "StrangerThings1"@en ,
+                                    "StrangerThings1"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#william_horberg
+serietv:william_horberg rdf:type owl:NamedIndividual ,
+                                 serietv:Persona ,
+                                 serietv:ProduttoreSerie ,
+                                 <http://xmlns.com/foaf/0.1/Person> ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty serietv:persona_ha_ruolo ;
+                                   owl:someValuesFrom serietv:Produttore
+                                 ] ;
+                        serietv:persona_ha_ruolo serietv:produttori_la_regina_degli_scacchi ;
+                        rdfs:comment "Producer of the USA miniseries The queens gambit"@en ,
+                                     "Produttore della miniserie USA La regina degli scacchi"@it ;
+                        rdfs:label "WilliamHorberg"@en ,
+                                   "WilliamHorberg"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#william_shaibel
+serietv:william_shaibel rdf:type owl:NamedIndividual ,
+                                 serietv:Personaggio ;
+                        serietv:personaggio_di_serie serietv:LaReginaDegliScacchi ;
+                        serietv:personaggio_interpretato_da serietv:bill_camp ;
+                        rdfs:comment "Character of the USA miniseries The queens gambit"@en ,
+                                     "Personaggio della miniserie USA La regina degli scacchi"@it ;
+                        rdfs:label "WilliamShaibel"@en ,
+                                   "WilliamShaibel"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#winora_rider
+serietv:winora_rider rdf:type owl:NamedIndividual ,
+                              serietv:AttoreSerie ,
+                              serietv:Persona ,
+                              <http://xmlns.com/foaf/0.1/Person> ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty serietv:persona_ha_ruolo ;
+                                owl:someValuesFrom serietv:Attore
+                              ] ;
+                     serietv:interpreta serietv:joyce_byers ;
+                     serietv:persona_ha_ruolo serietv:attori_stranger_things ;
+                     rdfs:comment "Actress of the USA series Stranger things"@en ,
+                                  "Attrice della serie USA Stranger things"@it ;
+                     rdfs:label "WinoraRider"@en ,
+                                "WinoraRider"@it .
+
+
+###  http://www.semanticweb.org/progettomodsem/2020/serietv#capitolo_primo:la_scomparsa_di_will_byers
+serietv:capitolo_primo:la_scomparsa_di_will_byers rdf:type owl:NamedIndividual ,
+                                                           serietv:Episodio ;
+                                                  part:isPartOf serietv:stranger_things1 ;
+                                                  rdfs:comment "Episode of the USA series Stranger things"@en ,
+                                                               "Episodio della serie USA Stranger things"@it ;
+                                                  rdfs:label "Capitolo1LaScomparsaDiWillByers"@it ,
+                                                             "Chapter1TheVanishingOfWillByers"@en .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+serietv:Brasile rdfs:comment "Brazil Country"@en ;
+                rdfs:label "Brazil"@en ;
+                rdfs:comment "Paese Brasile"@it ;
+                rdfs:label "Brasile"@it .
+
+
+serietv:Italia rdfs:label "Italy"@en ;
+               rdfs:comment "Italy country"@en ,
+                            "Paese Italia"@it ;
+               rdfs:label "Italia"@it .
+
+
+serietv:USA rdfs:label "USA"@en ;
+            rdfs:comment "Paese USA"@it ;
+            rdfs:label "USA"@it ;
+            rdfs:comment "USA country"@en .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                         owl:onProperty part:hasPart ;
+                         owl:someValuesFrom serietv:Stagione
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_episodi ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxInclusive "11"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_stagioni ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxExclusive "2"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                     ) ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf serietv:Miniserie
+] .
+
+
+[ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                         owl:onProperty part:hasPart ;
+                         owl:someValuesFrom serietv:Stagione
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_episodi ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxInclusive "11"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_stagioni ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxExclusive "2"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                     ) ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf serietv:SerieTelevisiva
+] .
+
+
+[ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                         owl:onProperty part:hasPart ;
+                         owl:someValuesFrom serietv:Stagione
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_episodi ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxInclusive "11"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_stagioni ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxExclusive "2"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                     ) ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf [ rdf:type owl:Class ;
+                    owl:unionOf ( serietv:Episodio
+                                  serietv:SerieTelevisiva
+                                )
+                  ]
+] .
+
+
+[ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                         owl:onProperty part:hasPart ;
+                         owl:someValuesFrom serietv:Stagione
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_episodi ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxInclusive "11"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_stagioni ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxExclusive "2"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                     ) ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                    owl:onProperty part:hasPart ;
+                    owl:someValuesFrom serietv:Stagione
+                  ]
+] .
+
+
+[ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                         owl:onProperty part:hasPart ;
+                         owl:someValuesFrom serietv:Stagione
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_episodi ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxInclusive "11"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_stagioni ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxExclusive "2"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                     ) ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                    owl:onProperty serietv:numero_episodi ;
+                    owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                         owl:onDatatype xsd:nonNegativeInteger ;
+                                         owl:withRestrictions ( [ xsd:maxInclusive "11"^^xsd:nonNegativeInteger
+                                                                ]
+                                                              )
+                                       ]
+                  ]
+] .
+
+
+[ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                         owl:onProperty part:hasPart ;
+                         owl:someValuesFrom serietv:Stagione
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_episodi ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxInclusive "11"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty serietv:numero_stagioni ;
+                         owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:nonNegativeInteger ;
+                                              owl:withRestrictions ( [ xsd:maxExclusive "2"^^xsd:nonNegativeInteger
+                                                                     ]
+                                                                   )
+                                            ]
+                       ]
+                     ) ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                    owl:onProperty serietv:numero_stagioni ;
+                    owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                         owl:onDatatype xsd:nonNegativeInteger ;
+                                         owl:withRestrictions ( [ xsd:maxExclusive "2"^^xsd:nonNegativeInteger
+                                                                ]
+                                                              )
+                                       ]
+                  ]
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:oneOf ( serietv:Brasile
+            ) ;
+  rdfs:subClassOf serietv:Brasile
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:oneOf ( serietv:Brasile
+            ) ;
+  rdfs:subClassOf serietv:Paese
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:oneOf ( serietv:Brasile
+            ) ;
+  rdfs:subClassOf [ rdf:type owl:Class ;
+                    owl:oneOf ( serietv:Brasile
+                                serietv:Italia
+                                serietv:USA
+                              )
+                  ]
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:oneOf ( serietv:Brasile
+              serietv:Italia
+              serietv:USA
+            ) ;
+  rdfs:subClassOf serietv:Paese
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:oneOf ( serietv:Italia
+            ) ;
+  rdfs:subClassOf serietv:Italia
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:oneOf ( serietv:Italia
+            ) ;
+  rdfs:subClassOf serietv:Paese
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:oneOf ( serietv:Italia
+            ) ;
+  rdfs:subClassOf [ rdf:type owl:Class ;
+                    owl:oneOf ( serietv:Brasile
+                                serietv:Italia
+                                serietv:USA
+                              )
+                  ]
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:oneOf ( serietv:USA
+            ) ;
+  rdfs:subClassOf serietv:Paese
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:oneOf ( serietv:USA
+            ) ;
+  rdfs:subClassOf serietv:USA
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:oneOf ( serietv:USA
+            ) ;
+  rdfs:subClassOf [ rdf:type owl:Class ;
+                    owl:oneOf ( serietv:Brasile
+                                serietv:Italia
+                                serietv:USA
+                              )
+                  ]
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty part:hasPart ;
+  owl:someValuesFrom serietv:Stagione ;
+  rdfs:subClassOf serietv:SerieTelevisiva
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty part:hasPart ;
+  owl:someValuesFrom serietv:Stagione ;
+  rdfs:subClassOf [ rdf:type owl:Class ;
+                    owl:unionOf ( serietv:Episodio
+                                  serietv:SerieTelevisiva
+                                )
+                  ]
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:persona_ha_ruolo ;
+  owl:someValuesFrom serietv:Attore ;
+  rdfs:subClassOf serietv:AttoreSerie
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:persona_ha_ruolo ;
+  owl:someValuesFrom serietv:Attore ;
+  rdfs:subClassOf serietv:Persona
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:persona_ha_ruolo ;
+  owl:someValuesFrom serietv:Attore ;
+  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Person>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:persona_ha_ruolo ;
+  owl:someValuesFrom serietv:Ideatore ;
+  rdfs:subClassOf serietv:IdeatoreSerie
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:persona_ha_ruolo ;
+  owl:someValuesFrom serietv:Ideatore ;
+  rdfs:subClassOf serietv:Persona
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:persona_ha_ruolo ;
+  owl:someValuesFrom serietv:Ideatore ;
+  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Person>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:persona_ha_ruolo ;
+  owl:someValuesFrom serietv:Produttore ;
+  rdfs:subClassOf serietv:Persona
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:persona_ha_ruolo ;
+  owl:someValuesFrom serietv:Produttore ;
+  rdfs:subClassOf serietv:ProduttoreSerie
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:persona_ha_ruolo ;
+  owl:someValuesFrom serietv:Produttore ;
+  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Person>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:castContienePersona ;
+  owl:minQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+  owl:onClass serietv:Persona ;
+  rdfs:subClassOf serietv:Cast
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty serietv:castContienePersona ;
+  owl:minQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+  owl:onClass serietv:Persona ;
+  rdfs:subClassOf serietv:CastMin3Persone
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( serietv:Brasile
+                        serietv:Italia
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( serietv:Brasile
+                        serietv:USA
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( serietv:Italia
+                        serietv:USA
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( serietv:antonio_fagundes
+                        serietv:armando_costa
+                        serietv:bill_camp
+                        serietv:carlo_bixio
+                        serietv:claudio_amendola
+                        serietv:dan_cohen
+                        serietv:ellen_pompeo
+                        serietv:francesco_vicario
+                        serietv:matt_duffer
+                        serietv:ross_duffer
+                        serietv:scott_frank
+                        serietv:shonda_rhimes
+                        serietv:william_horberg
+                        serietv:winora_rider
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( serietv:aperture
+                        serietv:isso_acontece
+                        serietv:promessi_sposi
+                        serietv:quando_il_gioco_si_fa_duro
+                        serietv:capitolo_primo:la_scomparsa_di_will_byers
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( serietv:brazil1
+                        serietv:greys_anatomy1
+                        serietv:i_cesaroni1
+                        serietv:la_regina_degli_scacchi1
+                        serietv:stranger_things1
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( serietv:cast_brazil
+                        serietv:cast_greys_anatomy
+                        serietv:cast_i_cesaroni
+                        serietv:cast_la_regina_degli_scacchi
+                        serietv:cast_stranger_things
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( serietv:ideatori_brazil
+                        serietv:ideatori_greys_anatomy
+                        serietv:ideatori_i_cesaroni
+                        serietv:ideatori_la_regina_degli_scacchi
+                        serietv:ideatori_stranger_things
+                      )
+] .
+
+
+#################################################################
+#    Rules
+#################################################################
+
+serietv:episodio rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+serietv:serie rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+serietv:paese rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+serietv:int rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+serietv:start rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+serietv:end rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+serietv:st rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+serietv:tit rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Se un episodio, fa parte di una serie di un certo paese, l'episodio sarà stato fatto nello stesso paese"^^xsd:string ;
+   rdfs:label "S2"^^xsd:string ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> serietv:Episodio ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> serietv:episodio
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> part:isPartOf ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> serietv:episodio ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> serietv:serie
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> serietv:serie_ha_paese ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> serietv:serie ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> serietv:paese
+                                                                           ] ;
+                                                                 rdf:rest rdf:nil
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> serietv:episodioFattoIn ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> serietv:episodio ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> serietv:paese
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "capire se una serie TV è finita"^^xsd:string ;
+   rdfs:label "S1"^^xsd:string ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> serietv:SerieTelevisiva ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> serietv:serie
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> serietv:serie_ha_intervallo ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> serietv:serie ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> serietv:int
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> time:hasIntervalStartDate ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> serietv:int ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> serietv:start
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#propertyPredicate> time:hasIntervalEndDate ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> serietv:int ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument2> serietv:end
+                                                                                      ] ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> serietv:conclusa ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> serietv:serie ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> "si"^^xsd:string
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Capire se una serie è del secolo scorso"^^xsd:string ;
+   rdfs:label "S3"^^xsd:string ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> serietv:SerieTelevisiva ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> serietv:serie
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> serietv:serie_ha_intervallo ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> serietv:serie ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> serietv:int
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> time:hasIntervalStartDate ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> serietv:int ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> serietv:start
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#lessThan> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first serietv:start ;
+                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                rdf:first 2000 ;
+                                                                                                                                                rdf:rest rdf:nil
+                                                                                                                                              ]
+                                                                                                                                   ]
+                                                                                      ] ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> serietv:SerieSecoloScorso ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> serietv:serie
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Capire se una serie ha più di 10 stagioni"^^xsd:string ;
+   rdfs:label "S5"^^xsd:string ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> serietv:SerieTelevisiva ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> serietv:serie
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> serietv:numero_stagioni ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> serietv:serie ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> serietv:st
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#greaterThan> ;
+                                                                             <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                          rdf:first serietv:st ;
+                                                                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first 10 ;
+                                                                                                                                     rdf:rest rdf:nil
+                                                                                                                                   ]
+                                                                                                                        ]
+                                                                           ] ;
+                                                                 rdf:rest rdf:nil
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> serietv:SeriePiu10Stagioni ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> serietv:serie
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "allineare la serie \"Stranger Things\" con quella di Dbpedia"^^xsd:string ;
+   rdfs:label "S4"^^xsd:string ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> serietv:SerieTelevisiva ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> serietv:serie
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> serietv:titolo ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> serietv:serie ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> serietv:tit
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#containsIgnoreCase> ;
+                                                                             <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                          rdf:first serietv:tit ;
+                                                                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first "stranger things"^^xsd:string ;
+                                                                                                                                     rdf:rest rdf:nil
+                                                                                                                                   ]
+                                                                                                                        ]
+                                                                           ] ;
+                                                                 rdf:rest rdf:nil
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#SameIndividualAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> serietv:serie ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <http://dbpedia.org/ontology/Stranger_Things>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
